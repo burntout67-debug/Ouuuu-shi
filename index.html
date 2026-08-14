@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hey, Hey you 👀</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow: hidden;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(135deg, #ff758c, #ff7eb3, #a18cd1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+    }
+
+    .card {
+      position: relative;
+      z-index: 10;
+      width: min(90%, 550px);
+      padding: 50px 35px;
+      text-align: center;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.16);
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(255,255,255,.3);
+      box-shadow: 0 25px 60px rgba(0,0,0,.2);
+    }
+
+    .emoji {
+      font-size: 65px;
+      margin-bottom: 15px;
+      animation: float 2.5s ease-in-out infinite;
+    }
+
+    h1 {
+      font-size: clamp(32px, 7vw, 52px);
+      margin-bottom: 15px;
+    }
+
+    p {
+      font-size: 19px;
+      line-height: 1.6;
+      opacity: .95;
+      margin-bottom: 30px;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      position: relative;
+      min-height: 60px;
+    }
+
+    button {
+      border: none;
+      padding: 15px 35px;
+      border-radius: 999px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: .25s ease;
+    }
+
+    #yes {
+      background: white;
+      color: #ff4f81;
+      box-shadow: 0 8px 20px rgba(0,0,0,.15);
+    }
+
+    #yes:hover {
+      transform: scale(1.08);
+    }
+
+    #no {
+      background: rgba(0,0,0,.18);
+      color: white;
+      position: relative;
+    }
+
+    .heart {
+      position: fixed;
+      bottom: -30px;
+      font-size: 25px;
+      pointer-events: none;
+      animation: rise linear forwards;
+      opacity: .8;
+    }
+
+    .success {
+      display: none;
+    }
+
+    .success h1 {
+      font-size: clamp(35px, 8vw, 60px);
+    }
+
+    .success .big-heart {
+      font-size: 90px;
+      animation: heartbeat 1s infinite;
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    @keyframes heartbeat {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.2);
+      }
+    }
+
+    @keyframes rise {
+      from {
+        transform: translateY(0) rotate(0deg);
+        opacity: .8;
+      }
+      to {
+        transform: translateY(-110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="card" id="question">
+
+    <div class="emoji">👀</div>
+
+    <h1>Okay... I have a question.</h1>
+
+    <p>
+      I've been wanting to ask you something
+      <br><br>
+      Would you date me
+    </p>
+
+    <div class="buttons">
+      <button id="yes">YES 👀</button>
+      <button id="no">No 😔</button>
+    </div>
+
+  </div>
+
+  <div class="card success" id="success">
+
+    <div class="big-heart">💗</div>
+
+    <h1>HELL YEAH 👀</h1>
+
+    <p>
+      You just made me happi
+      <br><br>
+      I guess we're together now 👀
+    </p>
+
+  </div>
+
+  <script>
+    const yes = document.getElementById("yes");
+    const no = document.getElementById("no");
+    const question = document.getElementById("question");
+    const success = document.getElementById("success");
+
+    yes.addEventListener("click", () => {
+      question.style.display = "none";
+      success.style.display = "block";
+
+      for (let i = 0; i < 40; i++) {
+        setTimeout(createHeart, i * 50);
+      }
+    });
+
+    no.addEventListener("mouseover", () => {
+      const maxX = window.innerWidth - no.offsetWidth - 30;
+      const maxY = window.innerHeight - no.offsetHeight - 30;
+
+      no.style.position = "fixed";
+      no.style.left = Math.random() * maxX + "px";
+      no.style.top = Math.random() * maxY + "px";
+    });
+
+    function createHeart() {
+      const heart = document.createElement("div");
+
+      heart.className = "heart";
+      heart.innerHTML = ["❤️", "💗", "💕", "💖", "💘"][Math.floor(Math.random() * 5)];
+
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = (3 + Math.random() * 4) + "s";
+      heart.style.fontSize = (15 + Math.random() * 25) + "px";
+
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 7000);
+    }
+
+    setInterval(createHeart, 700);
+  </script>
+
+</body>
+</html>
+```
